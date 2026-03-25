@@ -1,0 +1,52 @@
+[
+  {
+    "_id": { "$oid": "507f1f77bcf86cd799439041" },
+    "renterId": { "$oid": "507f1f77bcf86cd799439011" },
+    "toyId": { "$oid": "507f1f77bcf86cd799439022" },
+    "addressId": { "$oid": "507f1f77bcf86cd799439031" },
+    "message": "Mình rất muốn thuê chiếc xe đẹp này cho con em",
+    "status": "approved",
+    "createdAt": "2024-03-08T10:00:00.000Z",
+    "updatedAt": "2024-03-08T14:30:00.000Z"
+  },
+  {
+    "_id": { "$oid": "507f1f77bcf86cd799439042" },
+    "renterId": { "$oid": "507f1f77bcf86cd799439012" },
+    "toyId": { "$oid": "507f1f77bcf86cd799439023" },
+    "addressId": { "$oid": "507f1f77bcf86cd799439033" },
+    "message": "Hiện tại con em đang rất thích robot, có thể cho mình thuê được không?",
+    "status": "waiting",
+    "createdAt": "2024-03-09T09:15:00.000Z",
+    "updatedAt": "2024-03-09T09:15:00.000Z"
+  },
+  {
+    "_id": { "$oid": "507f1f77bcf86cd799439043" },
+    "renterId": { "$oid": "507f1f77bcf86cd799439011" },
+    "toyId": { "$oid": "507f1f77bcf86cd799439021" },
+    "addressId": { "$oid": "507f1f77bcf86cd799439032" },
+    "message": "LEGO rất hay, bé thích lắm",
+    "status": "approved",
+    "createdAt": "2024-03-07T15:30:00.000Z",
+    "updatedAt": "2024-03-07T16:45:00.000Z"
+  },
+  {
+    "_id": { "$oid": "507f1f77bcf86cd799439044" },
+    "renterId": { "$oid": "507f1f77bcf86cd799439012" },
+    "toyId": { "$oid": "507f1f77bcf86cd799439025" },
+    "addressId": { "$oid": "507f1f77bcf86cd799439035" },
+    "message": "Con gái muốn chơi những tập đoàn nhân vật Barbie",
+    "status": "rejected",
+    "createdAt": "2024-03-05T12:00:00.000Z",
+    "updatedAt": "2024-03-06T10:00:00.000Z"
+  },
+  {
+    "_id": { "$oid": "507f1f77bcf86cd799439045" },
+    "renterId": { "$oid": "507f1f77bcf86cd799439014" },
+    "toyId": { "$oid": "507f1f77bcf86cd799439023" },
+    "addressId": { "$oid": "507f1f77bcf86cd799439034" },
+    "message": "Cần dùng để dạy các em bé",
+    "status": "waiting",
+    "createdAt": "2024-03-10T08:30:00.000Z",
+    "updatedAt": "2024-03-10T08:30:00.000Z"
+  }
+]

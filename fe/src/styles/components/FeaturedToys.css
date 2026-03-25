@@ -1,0 +1,193 @@
+/* FeaturedToys Prefix: .ft- */
+
+.ft-section {
+  padding-top: 5rem;
+  padding-bottom: 5rem;
+  background-color: white;
+}
+
+.ft-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 3rem;
+}
+
+.ft-title {
+  font-weight: 800;
+  color: #111827;
+  letter-spacing: -0.5px;
+  margin-bottom: 0.25rem;
+}
+
+.ft-subtitle {
+  color: #6b7280;
+  margin-bottom: 0;
+  font-size: 0.95rem;
+}
+
+.ft-view-all {
+  text-decoration: none;
+  font-weight: 700;
+  color: #3cb14a;
+  font-size: 0.9rem;
+  transition: all 0.2s;
+  padding: 0.5rem 1rem;
+  border-radius: 50rem;
+}
+
+.ft-view-all:hover {
+  background-color: #f0fdf4;
+  color: #2d8e3a;
+  transform: translateX(4px);
+}
+
+/* Card Prefix: .ftc- */
+.ftc-card {
+  border: none !important;
+  overflow: hidden;
+  border-radius: 1.5rem !important;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.02);
+  transition: all 0.3s;
+  border: 1px solid #f3f4f6 !important;
+  background: white;
+}
+
+.ftc-card:hover {
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.12);
+  transform: translateY(-5px);
+  border-color: #3cb14a !important;
+}
+
+.ftc-img-col {
+  position: relative;
+  overflow: hidden;
+  min-height: 250px;
+}
+
+.ftc-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.ftc-card:hover .ftc-img {
+  transform: scale(1.1);
+}
+
+.ftc-badge {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  padding: 0.35rem 1rem;
+  border-radius: 50rem;
+  color: white;
+  font-weight: 800;
+  font-size: 0.7rem;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  z-index: 5;
+}
+
+.ftc-like-btn {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: none;
+  background: white;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  z-index: 5;
+}
+
+.ftc-like-btn:hover {
+  transform: scale(1.15);
+  background: #fef2f2;
+}
+
+.ftc-body {
+  padding: 2.5rem !important;
+}
+
+.ftc-title {
+  font-weight: 800;
+  font-size: 1.5rem;
+  color: #111827;
+  margin-bottom: 0.75rem;
+  letter-spacing: -0.02em;
+}
+
+.ftc-rating-box {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.ftc-star-icon {
+  fill: #f59e0b;
+  stroke: none;
+}
+
+.ftc-rating-val {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: #374151;
+}
+
+.ftc-reviews {
+  font-size: 0.875rem;
+  color: #9ca3af;
+}
+
+.ftc-desc {
+  font-size: 1rem;
+  color: #4b5563;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.ftc-price {
+  color: #3cb14a;
+  font-weight: 800;
+  font-size: 1.5rem;
+  letter-spacing: -0.01em;
+}
+
+.ftc-old-price {
+  text-decoration: line-through;
+  color: #9ca3af;
+  font-size: 1rem;
+  margin-left: 0.75rem;
+  font-weight: 500;
+}
+
+.ftc-rent-btn {
+  background-color: #3cb14a !important;
+  border: none !important;
+  font-weight: 700 !important;
+  font-size: 0.95rem !important;
+  padding: 0.75rem 2rem !important;
+  border-radius: 50rem !important;
+  color: white !important;
+  transition: all 0.3s !important;
+  box-shadow: 0 10px 15px -3px rgba(60, 177, 74, 0.2) !important;
+}
+
+.ftc-rent-btn:hover {
+  transform: scale(1.05) !important;
+  background-color: #2d8e3a !important;
+  box-shadow: 0 20px 25px -5px rgba(60, 177, 74, 0.4) !important;
+}

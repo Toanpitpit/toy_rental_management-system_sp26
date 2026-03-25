@@ -1,0 +1,176 @@
+.admin-layout-wrapper {
+  display: flex;
+  min-height: 100vh;
+  background-color: #f4f6f9;
+}
+
+.admin-sidebar {
+  width: 280px;
+  background-color: #fff;
+  border-right: 1px solid #e9ecef;
+  transition: width 0.3s ease;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  position: sticky;
+  top: 0;
+}
+
+.admin-main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.admin-header {
+  height: 70px;
+  z-index: 1000;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.sidebar-brand .brand-icon {
+  font-size: 1.8rem;
+}
+
+.sidebar-brand .brand-name {
+  font-size: 1.3rem;
+  color: #1a1a1b;
+}
+
+.sidebar-link {
+  color: #6c757d;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  font-size: 0.95rem;
+}
+
+.sidebar-link:hover {
+  background-color: #f8f9fa;
+  color: #198754;
+}
+
+.sidebar-link.active {
+  background-color: #e8f5e9;
+  color: #198754;
+}
+
+.sidebar-link.active .link-icon {
+  color: #198754;
+}
+
+.sidebar-link .link-arrow {
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.sidebar-link:hover .link-arrow,
+.sidebar-link.active .link-arrow {
+  opacity: 1;
+}
+
+.user-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #fff;
+}
+
+.admin-page-content {
+  background-color: #f4f6f9;
+  flex: 1;
+}
+
+/* Card overrides for admin page */
+.card {
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+}
+
+.btn-success {
+  background-color: #198754;
+  border-color: #198754;
+}
+
+.btn-success:hover {
+  background-color: #157347;
+  border-color: #146c43;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+@media (max-width: 992px) {
+  .admin-sidebar {
+    width: 80px; 
+  }
+}
+
+/* Global Admin Table Styling */
+.table {
+  font-size: 1rem; /* Bigger text as requested */
+}
+
+.table thead th {
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.82rem;
+  letter-spacing: 0.5px;
+  color: #718096;
+  background-color: #fcfdfe !important;
+  padding: 1.25rem 1rem !important;
+  border-bottom: 1px solid #edf2f7 !important; /* Mờ hơn, nhẹ nhàng hơn */
+}
+
+.table tbody td {
+  padding: 1.4rem 1rem !important; /* Dãn hơn nữa */
+  color: #2d3748;
+  vertical-align: middle;
+  border-bottom: 1px solid #f7fafc !important;
+}
+
+.table tbody tr:last-child td {
+  border-bottom: 0 !important;
+}
+
+.table-hover tbody tr:hover {
+  background-color: #fdfdfd !important;
+  box-shadow: inset 4px 0 0 #198754;
+}
+
+.btn {
+  border-radius: 10px !important; /* Bo thêm góc */
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.form-control, .form-select {
+  border-radius: 10px !important; /* Bo cho đồng bộ */
+  border-color: #edf2f7;
+  padding: 0.6rem 1rem;
+}
+
+.badge-status {
+  border-radius: 10px !important; /* Bo góc vát thay vì pill hoàn toàn nếu muốn sang hơn */
+  padding: 0.5rem 1rem !important;
+  font-size: 0.85rem !important;
+}
+
+
+.pagination .page-link {
+  border-radius: 8px;
+  margin: 0 3px;
+  color: #198754;
+  border: 1px solid #e9ecef;
+}
+
+.pagination .page-item.active .page-link {
+  background-color: #198754;
+  border-color: #198754;
+  color: #fff;
+}
+

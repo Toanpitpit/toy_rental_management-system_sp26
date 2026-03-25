@@ -1,0 +1,163 @@
+/* PopularToys Prefix: .pt- */
+
+.pt-section {
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+  background: #f7faf8;
+}
+
+.pt-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+}
+
+.pt-title {
+  font-weight: 700;
+  color: #222;
+  margin-bottom: 0;
+}
+
+.pt-subtitle {
+  color: #6b7280;
+  margin-bottom: 0;
+  font-size: 0.875rem;
+}
+
+.pt-view-all {
+  text-decoration: none;
+  font-weight: 600;
+  color: #3cb14a;
+  font-size: 0.875rem;
+  transition: opacity 0.2s;
+}
+
+.pt-view-all:hover {
+  opacity: 0.8;
+  color: #2d8e3a;
+}
+
+/* Card Prefix: .ptc- */
+.ptc-card {
+  border: none;
+  overflow: hidden;
+  border-radius: 1rem;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.07);
+  transition: all 0.2s;
+  cursor: pointer;
+  height: 100%;
+}
+
+.ptc-card:hover {
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.13);
+  transform: translateY(-4px);
+}
+
+.ptc-img-container {
+  position: relative;
+  overflow: hidden;
+  height: 200px;
+}
+
+.ptc-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s;
+}
+
+.ptc-card:hover .ptc-img {
+  transform: scale(1.06);
+}
+
+.ptc-badge {
+  position: absolute;
+  top: 0.5rem;
+  left: 0.5rem;
+  background: #3cb14a;
+  font-weight: 600;
+  font-size: 0.7rem;
+  border-radius: 50rem;
+}
+
+.ptc-like-btn {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  transition: transform 0.2s;
+}
+
+.ptc-like-btn:hover {
+  transform: scale(1.1);
+  background: white;
+}
+
+.ptc-body {
+  padding: 1rem;
+}
+
+.ptc-name {
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: #1f2937;
+  margin-bottom: 0.25rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ptc-rating {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  margin-bottom: 1rem;
+}
+
+.ptc-rating-value {
+  font-size: 0.75rem;
+  color: #4b5563;
+}
+
+.ptc-rating-count {
+  font-size: 0.75rem;
+  color: #9ca3af;
+}
+
+.ptc-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.ptc-price {
+  color: #3cb14a;
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+.ptc-rent-btn {
+  background: #3cb14a;
+  border: none;
+  font-weight: 600;
+  font-size: 0.75rem;
+  padding: 0.25rem 1rem;
+  border-radius: 50rem;
+  color: white;
+  transition: all 0.2s;
+}
+
+.ptc-rent-btn:hover {
+  background: #2d8e3a;
+  box-shadow: 0 4px 8px rgba(60, 177, 74, 0.3);
+}

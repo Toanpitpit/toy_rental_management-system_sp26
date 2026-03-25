@@ -1,0 +1,65 @@
+.admin-sidebar {
+  width: 280px;
+  background-color: #fff;
+  border-right: 1px solid #e9ecef;
+  transition: width 0.3s ease;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  position: sticky;
+  top: 0;
+}
+
+.sidebar-brand .brand-icon {
+  font-size: 1.8rem;
+}
+
+.sidebar-brand .brand-name {
+  font-size: 1.3rem;
+  color: #1a1a1b;
+}
+
+.sidebar-link {
+  color: #6c757d;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  font-size: 0.95rem;
+}
+
+.sidebar-link:hover {
+  background-color: #f8f9fa;
+  color: #198754;
+}
+
+.sidebar-link.active {
+  background-color: #e8f5e9;
+  color: #198754;
+}
+
+.sidebar-link.active .link-icon {
+  color: #198754;
+}
+
+.sidebar-link .link-arrow {
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.sidebar-link:hover .link-arrow,
+.sidebar-link.active .link-arrow {
+  opacity: 1;
+}
+
+.user-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #fff;
+}
+
+.user-info-card {
+  border: 1px solid #eee;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+}

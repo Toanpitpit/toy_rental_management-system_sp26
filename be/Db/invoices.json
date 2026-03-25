@@ -1,0 +1,29 @@
+[
+  {
+    "_id": { "$oid": "507f1f77bcf86cd799439071" },
+    "rentalId": { "$oid": "507f1f77bcf86cd799439053" },
+    "invoiceCode": "INV-2024-0001",
+    "totalAmount": 1200000,
+    "finalRefund": 1100000,
+    "createdAt": "2024-02-27T09:00:00.000Z",
+    "updatedAt": "2024-02-28T10:30:00.000Z"
+  },
+  {
+    "_id": { "$oid": "507f1f77bcf86cd799439072" },
+    "rentalId": { "$oid": "507f1f77bcf86cd799439054" },
+    "invoiceCode": "INV-2024-0002",
+    "totalAmount": 2000000,
+    "finalRefund": 1900000,
+    "createdAt": "2024-03-05T10:45:00.000Z",
+    "updatedAt": "2024-03-06T14:15:00.000Z"
+  },
+  {
+    "_id": { "$oid": "507f1f77bcf86cd799439073" },
+    "rentalId": { "$oid": "507f1f77bcf86cd799439051" },
+    "invoiceCode": "INV-2024-0003",
+    "totalAmount": 2250000,
+    "finalRefund": 2250000,
+    "createdAt": "2024-03-12T04:00:00.000Z",
+    "updatedAt": "2024-03-12T05:00:00.000Z"
+  }
+]

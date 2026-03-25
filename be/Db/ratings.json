@@ -1,0 +1,57 @@
+[
+  {
+    "_id": { "$oid": "507f1f77bcf86cd799439091" },
+    "rentalId": { "$oid": "507f1f77bcf86cd799439053" },
+    "fromUserId": { "$oid": "507f1f77bcf86cd799439012" },
+    "targetId": { "$oid": "507f1f77bcf86cd799439025" },
+    "targetModel": "Toy",
+    "stars": 5,
+    "comment": "Ngôi nhà búp bê rất đẹp, con gái rất thích! Tình trạng như mới.",
+    "createdAt": "2024-02-27T14:00:00.000Z",
+    "updatedAt": "2024-02-27T14:00:00.000Z"
+  },
+  {
+    "_id": { "$oid": "507f1f77bcf86cd799439092" },
+    "rentalId": { "$oid": "507f1f77bcf86cd799439053" },
+    "fromUserId": { "$oid": "507f1f77bcf86cd799439012" },
+    "targetId": { "$oid": "507f1f77bcf86cd799439011" },
+    "targetModel": "User",
+    "stars": 4,
+    "comment": "Chủ nhân rất thu cửa, trao đổi dễ dàng. Hộp hàng được đóng gói kỹ càng.",
+    "createdAt": "2024-02-27T14:30:00.000Z",
+    "updatedAt": "2024-02-27T14:30:00.000Z"
+  },
+  {
+    "_id": { "$oid": "507f1f77bcf86cd799439093" },
+    "rentalId": { "$oid": "507f1f77bcf86cd799439054" },
+    "fromUserId": { "$oid": "507f1f77bcf86cd799439012" },
+    "targetId": { "$oid": "507f1f77bcf86cd799439021" },
+    "targetModel": "Toy",
+    "stars": 4,
+    "comment": "LEGO rất vui, con em rất thích. Một số chi tiết nhỏ bị mất nhưng không ảnh hưởng.",
+    "createdAt": "2024-03-05T16:00:00.000Z",
+    "updatedAt": "2024-03-05T16:00:00.000Z"
+  },
+  {
+    "_id": { "$oid": "507f1f77bcf86cd799439094" },
+    "rentalId": { "$oid": "507f1f77bcf86cd799439054" },
+    "fromUserId": { "$oid": "507f1f77bcf86cd799439012" },
+    "targetId": { "$oid": "507f1f77bcf86cd799439014" },
+    "targetModel": "User",
+    "stars": 4,
+    "comment": "Chủ nhân đáng tin cậy, hỗ trợ tốt. Quán lý tài sản rất chuyên nghiệp.",
+    "createdAt": "2024-03-05T16:30:00.000Z",
+    "updatedAt": "2024-03-05T16:30:00.000Z"
+  },
+  {
+    "_id": { "$oid": "507f1f77bcf86cd799439095" },
+    "rentalId": { "$oid": "507f1f77bcf86cd799439051" },
+    "fromUserId": { "$oid": "507f1f77bcf86cd799439011" },
+    "targetId": { "$oid": "507f1f77bcf86cd799439022" },
+    "targetModel": "Toy",
+    "stars": 5,
+    "comment": "Xe RC rất hay, tốc độ nhanh. Chế độ điều khiển dễ dùng.",
+    "createdAt": "2024-03-11T10:00:00.000Z",
+    "updatedAt": "2024-03-11T10:00:00.000Z"
+  }
+]

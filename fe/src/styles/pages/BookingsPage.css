@@ -1,0 +1,77 @@
+.bookings-page-wrapper {
+  background-color: #f8f9fa;
+  min-height: 100vh;
+}
+
+.bookings-page-wrapper h2 {
+  color: #2c3e50;
+  position: relative;
+  padding-bottom: 10px;
+}
+
+.bookings-page-wrapper h2::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 50px;
+  height: 4px;
+  background-color: #198754;
+  border-radius: 2px;
+}
+
+.table-responsive {
+  background: #fff;
+  border: 1px solid #eee;
+  overflow: hidden;
+}
+
+.table thead th {
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  letter-spacing: 0.5px;
+  color: #6c757d;
+}
+
+.table tbody tr {
+  transition: all 0.2s ease;
+}
+
+.table tbody tr:hover {
+  background-color: #f8fdf9 !important;
+}
+
+.badge.rounded-pill {
+  font-weight: 500;
+  font-size: 0.8rem;
+  padding: 6px 12px !important;
+}
+
+.btn-outline-primary {
+  border-color: #dee2e6;
+  color: #2c3e50;
+}
+
+.btn-outline-primary:hover {
+  background-color: #f8f9fa;
+  border-color: #198754;
+  color: #198754;
+}
+
+.display-1 {
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
+
+@media (max-width: 768px) {
+  .table-responsive {
+    border: none;
+    box-shadow: none !important;
+  }
+}

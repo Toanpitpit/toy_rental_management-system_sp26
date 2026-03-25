@@ -1,0 +1,102 @@
+[
+  {
+    "_id": { "$oid": "507f1f77bcf86cd799439061" },
+    "toyId": { "$oid": "507f1f77bcf86cd799439021" },
+    "description": "Bộ LEGO Creator đa năng cho trẻ từ 8 tuổi trở lên. Có thể xây dựng ba mô hình khác nhau từ một bộ LEGO. Thiết kế tuyệt vời hoàn hảo cho quà tặng.",
+    "images": [
+      "lego_31109_1.jpg",
+      "lego_31109_2.jpg",
+      "lego_31109_3.jpg"
+    ],
+    "specifications": {
+      "material": "Plastic - ABS",
+      "size": "30cm x 20cm x 15cm",
+      "weight": "800g",
+      "requiresBattery": false
+    },
+    "ageRange": "8-99 years",
+    "origin": "Denmark",
+    "createdAt": "2024-02-01T12:00:00.000Z",
+    "updatedAt": "2024-03-10T10:00:00.000Z"
+  },
+  {
+    "_id": { "$oid": "507f1f77bcf86cd799439062" },
+    "toyId": { "$oid": "507f1f77bcf86cd799439022" },
+    "description": "Xe điều khiển từ xa 4 bánh có khả năng chạy trên tất cả các loại địa hình. Tốc độ tối đa 25km/h, pin chạy được 30 phút liên tục.",
+    "images": [
+      "rc_car_1.jpg",
+      "rc_car_2.jpg"
+    ],
+    "specifications": {
+      "material": "Metal + Plastic",
+      "size": "25cm x 15cm x 10cm",
+      "weight": "500g",
+      "requiresBattery": true
+    },
+    "ageRange": "6-14 years",
+    "origin": "China",
+    "createdAt": "2024-02-05T08:30:00.000Z",
+    "updatedAt": "2024-03-08T15:22:00.000Z"
+  },
+  {
+    "_id": { "$oid": "507f1f77bcf86cd799439063" },
+    "toyId": { "$oid": "507f1f77bcf86cd799439023" },
+    "description": "Bộ kit robot lập trình cho trẻ em học STEM. Có thể xây dựng các robot khác nhau và lập trình chúng để thực hiện nhiệm vụ khác nhau.",
+    "images": [
+      "robot_kit_1.jpg",
+      "robot_kit_2.jpg",
+      "robot_kit_3.jpg",
+      "robot_kit_4.jpg"
+    ],
+    "specifications": {
+      "material": "ABS Plastic + Metal",
+      "size": "35cm x 25cm x 20cm",
+      "weight": "1.2kg",
+      "requiresBattery": true
+    },
+    "ageRange": "10-18 years",
+    "origin": "Taiwan",
+    "createdAt": "2024-02-10T14:15:00.000Z",
+    "updatedAt": "2024-03-09T13:45:00.000Z"
+  },
+  {
+    "_id": { "$oid": "507f1f77bcf86cd799439064" },
+    "toyId": { "$oid": "507f1f77bcf86cd799439024" },
+    "description": "Bộ sưu tập các trò chơi bàn caro, cờ vua, đuổi hình bắt chữ và nhiều trò chơi khác. Hoàn hảo cho gia đình và bạn bè.",
+    "images": [
+      "board_games_1.jpg",
+      "board_games_2.jpg"
+    ],
+    "specifications": {
+      "material": "Wood + Plastic + Paper",
+      "size": "50cm x 40cm x 10cm (khi gập)",
+      "weight": "3kg",
+      "requiresBattery": false
+    },
+    "ageRange": "4-99 years",
+    "origin": "Vietnam",
+    "createdAt": "2024-03-01T09:00:00.000Z",
+    "updatedAt": "2024-03-10T08:00:00.000Z"
+  },
+  {
+    "_id": { "$oid": "507f1f77bcf86cd799439065" },
+    "toyId": { "$oid": "507f1f77bcf86cd799439025" },
+    "description": "Ngôi nhà búp bê Barbie sang trọng với 3 tầng, 8 phòng, trang trí đầy đủ và sắc sảo. Bao gồm 2 búp bê Barbie và nhiều đồ nội thất.",
+    "images": [
+      "barbie_house_1.jpg",
+      "barbie_house_2.jpg",
+      "barbie_house_3.jpg"
+    ],
+    "specifications": {
+      "material": "Plastic",
+      "size": "80cm x 60cm x 90cm",
+      "weight": "2.5kg",
+      "requiresBattery": false
+    },
+    "ageRange": "3-12 years",
+    "origin": "USA",
+    "createdAt": "2024-02-15T11:30:00.000Z",
+    "updatedAt": "2024-03-07T16:00:00.000Z"
+  }
+]
+

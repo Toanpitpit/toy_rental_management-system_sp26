@@ -1,0 +1,46 @@
+.bk-table-container {
+  overflow: hidden;
+  border-radius: 1rem;
+}
+
+.bk-status-badge {
+  min-width: 110px !important;
+  max-width: 110px !important;
+  width: 110px !important;
+  height: 28px !important;
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 0.7rem !important;
+  border-radius: 50px;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.bk-table thead th {
+  background-color: #f8f9fa;
+  color: #6c757d;
+  font-weight: 700;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  padding: 1rem 1.5rem;
+}
+
+.bk-table td {
+  padding: 1.25rem 1.5rem;
+  vertical-align: middle;
+}
+
+.bk-page-header {
+  padding: 1.5rem 0;
+}
+
+.bk-search-input {
+  transition: all 0.3s ease;
+}
+
+.bk-search-input:focus-within {
+  box-shadow: 0 0 0 0.25rem rgba(25, 135, 84, 0.1) !important;
+  background-color: white !important;
+}
