@@ -1,0 +1,134 @@
+[
+  {
+    "_id": "69c2d758d3c4009b4e7f5fda",
+    "bookingId": "69c2d5038751d2b6016dbe7a",
+    "employeeId": "69b456b86919e56b67380257",
+    "type": "return",
+    "imageUrl": [],
+    "condition": "Fair",
+    "surcharge": 40000,
+    "notes": "có vỡ vài mảnh le go vị trí B1 và D33",
+    "createdAt": "2026-03-24T18:26:32.630Z",
+    "updatedAt": "2026-03-24T18:26:32.630Z",
+    "__v": 0
+  },
+  {
+    "_id": "69c35fd672042699f6e7349d",
+    "bookingId": "69c3506edd514b81d3825236",
+    "employeeId": "69b456b86919e56b67380257",
+    "type": "return",
+    "imageUrl": [
+      "https://sdntoyrentalproject.s3.ap-southeast-2.amazonaws.com/inspections/d6ecc16a-480d-42fd-92f6-aaba62554e72.JPG",
+      "https://sdntoyrentalproject.s3.ap-southeast-2.amazonaws.com/inspections/40bb8248-5a3f-4bb0-8350-c8d41823be90.JPG",
+      "https://sdntoyrentalproject.s3.ap-southeast-2.amazonaws.com/inspections/eebd91bc-ba38-442f-962a-79678736f896.JPG",
+      "https://sdntoyrentalproject.s3.ap-southeast-2.amazonaws.com/inspections/d8f1e890-3cbd-4dd0-b96b-50866cab1fbc.JPG"
+    ],
+    "condition": "Excellent",
+    "surcharge": 20000,
+    "notes": "bị vỡ mất mảnh ghép A2",
+    "createdAt": "2026-03-25T04:08:54.764Z",
+    "updatedAt": "2026-03-25T04:08:54.764Z",
+    "__v": 0
+  },
+  {
+    "_id": "69c363a972042699f6e734f4",
+    "bookingId": "69c2d4188751d2b6016dbe13",
+    "employeeId": "69b456b86919e56b67380257",
+    "type": "return",
+    "imageUrl": [
+      "https://sdntoyrentalproject.s3.ap-southeast-2.amazonaws.com/inspections/5ebc7a59-2643-495b-a78a-c41fa46c4752.jpg"
+    ],
+    "condition": "Fair",
+    "surcharge": 0,
+    "notes": "Khôgn có , khách trả thêm típ ",
+    "createdAt": "2026-03-25T04:25:13.551Z",
+    "updatedAt": "2026-03-25T04:25:13.551Z",
+    "__v": 0
+  },
+  {
+    "_id": "69c365d672042699f6e735e6",
+    "bookingId": "69c3656772042699f6e735a5",
+    "employeeId": "69b456b86919e56b67380257",
+    "type": "pickup",
+    "imageUrl": [
+      "https://sdntoyrentalproject.s3.ap-southeast-2.amazonaws.com/inspections/c238983e-4f71-424c-bd74-f7b83a8b81da.jpg"
+    ],
+    "condition": "Excellent",
+    "surcharge": 0,
+    "notes": "tốt ",
+    "createdAt": "2026-03-25T04:34:30.725Z",
+    "updatedAt": "2026-03-25T04:34:30.725Z",
+    "__v": 0
+  },
+  {
+    "_id": "69c3685b72042699f6e736b6",
+    "bookingId": "69c3656772042699f6e735a5",
+    "employeeId": "69b456b86919e56b67380257",
+    "type": "return",
+    "imageUrl": [],
+    "condition": "Good",
+    "surcharge": 0,
+    "notes": "",
+    "createdAt": "2026-03-25T04:45:15.340Z",
+    "updatedAt": "2026-03-25T04:45:15.340Z",
+    "__v": 0
+  },
+  {
+    "_id": "69c3a75b92dd74de420c3e5f",
+    "bookingId": "69c3a6d792dd74de420c3dd3",
+    "employeeId": "69b456b86919e56b67380257",
+    "type": "pickup",
+    "imageUrl": [
+      "https://sdntoyrentalproject.s3.ap-southeast-2.amazonaws.com/inspections/a84b0389-4e0a-4a8d-87bd-2def19a9161e.JPG",
+      "https://sdntoyrentalproject.s3.ap-southeast-2.amazonaws.com/inspections/770b94ec-8b99-440b-ab7b-b7cd90398a98.JPG",
+      "https://sdntoyrentalproject.s3.ap-southeast-2.amazonaws.com/inspections/913daf42-7bbb-47da-b6ce-93860e0fcb68.JPG"
+    ],
+    "condition": "Good",
+    "surcharge": 0,
+    "notes": "tốt ",
+    "createdAt": "2026-03-25T09:14:03.078Z",
+    "updatedAt": "2026-03-25T09:14:03.078Z",
+    "__v": 0
+  },
+  {
+    "_id": "69c4214308536c485c4e8824",
+    "bookingId": "69c3a6d792dd74de420c3dd3",
+    "employeeId": "69b456b86919e56b67380257",
+    "type": "return",
+    "imageUrl": [],
+    "condition": "Excellent",
+    "rentalFee": 15000,
+    "surcharge": 0,
+    "notes": "",
+    "createdAt": "2026-03-25T17:54:11.931Z",
+    "updatedAt": "2026-03-25T17:54:11.931Z",
+    "__v": 0
+  },
+  {
+    "_id": "69c42a78c2825a2e7f957d09",
+    "bookingId": "69c429a0c2825a2e7f957c67",
+    "employeeId": "69b456b86919e56b67380257",
+    "type": "pickup",
+    "imageUrl": [],
+    "condition": "Excellent",
+    "rentalFee": 75000,
+    "surcharge": 0,
+    "notes": "",
+    "createdAt": "2026-03-25T18:33:28.463Z",
+    "updatedAt": "2026-03-25T18:33:28.463Z",
+    "__v": 0
+  },
+  {
+    "_id": "69c4ab17a2a79302675a60f8",
+    "bookingId": "69c429a0c2825a2e7f957c67",
+    "employeeId": "69b456b86919e56b67380257",
+    "type": "return",
+    "imageUrl": [],
+    "condition": "Excellent",
+    "surcharge": 0,
+    "notes": "",
+    "createdAt": "2026-03-26T03:42:15.681Z",
+    "updatedAt": "2026-03-26T03:42:15.681Z",
+    "__v": 0
+  }
+]

@@ -112,6 +112,26 @@ const changePassword = async (email, password, newPassword) => {
     }
 }
 
+const refreshAccessToken = async () => {
+    try {
+        const refreshToken = localStorage.getItem('refreshToken');
+        if (!refreshToken) throw new Error('No refresh token available');
+
+        const response = await axiosInstance.post(API_ENDPOINTS.REFRESH_TOKEN, {
+            refreshToken,
+        });
+        
+        const data = response.data;
+        if (data.success) {
+            localStorage.setItem('accessToken', data.accessToken);
+        }
+        return data;
+    } catch (error) {
+        console.error('Error refreshing token:', error);
+        throw error;
+    }
+}
+
 const changeEmail = async (email, password, newEmail) => {
     try {
         const response = await axiosInstance.post(API_ENDPOINTS.CHANGE_EMAIL, {
@@ -136,4 +156,5 @@ export default {
     resendOTP,
     changePassword,
     changeEmail,
+    refreshAccessToken,
 }

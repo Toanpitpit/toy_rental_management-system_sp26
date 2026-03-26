@@ -6,7 +6,7 @@ const Transaction = require('../models/Transaction');
 exports.createInspection = async (req, res, next) => {
   try {
     const { bookingId } = req.params;
-    const { type, condition, imageUrl, rentalFee, surcharge, notes, isPaid } = req.body;
+    const { type, condition, imageUrl, surcharge, notes, isPaid } = req.body;
     const employeeId = req.user._id;
 
     const booking = await Booking.findById(bookingId);
@@ -29,7 +29,6 @@ exports.createInspection = async (req, res, next) => {
       type,
       condition: condition || 'Excellent',
       imageUrl: imageUrl || [],
-      rentalFee: rentalFee || booking.totalAmount || 0,
       surcharge: surcharge || 0,
       notes,
     });

@@ -54,15 +54,19 @@ export const AuthProvider = ({ children }) => {
                 setData(null);
             } else {
                 setMessage(response.message);
-                setData(response.data);
-                const role = response.data?.role;
-                console.log('User Role detected:', role);
+                const userData = response.data;
+                setData(userData);
                 
-                // Set data first
-                setData(response.data);
-                getProfile();
+                // Immediately set profile from login data to satisfy ProtectedRoute
+                setUserProfile(userData);
+                
+                // Fetch full profile and await it
+                await getProfile();
+                
+                const role = userData?.role;
+                console.log('User Role detected for navigation:', role);
 
-                // Navigate immediately
+                // Navigate based on role
                 if (role === 'ADMIN' || role === 'EMPLOYEE') {
                     navigate('/admin');
                 } else {

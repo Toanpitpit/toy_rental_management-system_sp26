@@ -45,57 +45,23 @@ exports.createBooking = async (req, res, next) => {
       endDate: end,
       message,
       depositAmount,
-      totalAmount: fareAmount, // Note: Schema totalAmount is usually fare in this logic
-      status: paymentType === 'vnpay' ? 'WAITING_PAYMENT' : 'PENDING_APPROVED',
+      totalAmount: fareAmount, 
+      status: 'PENDING_APPROVED', // Always start with pending approval
       paymentMethod: paymentType || 'cod',
     });
 
-    // Chuyển toy → pending
+    // Chuyển toy → pending to reserve it
     await Toy.findByIdAndUpdate(toyId, { status: 'PENDING' });
-
-    // Nếu chọn VNPay, tạo Transaction và sinh URL
-    if (paymentType === 'vnpay') {
-      // Fare Transaction
-      await Transaction.create({
-        userId: renterId,
-        bookingId: booking._id,
-        amount: fareAmount,
-        type: 'fare',
-        paymentMethod: 'vnpay',
-        status: 'pending',
-        description: `Thanh toán phí thuê cho đồ chơi: ${toy.title}`
-      });
-
-      // Deposit Transaction
-      await Transaction.create({
-        userId: renterId,
-        bookingId: booking._id,
-        amount: depositAmount,
-        type: 'deposit',
-        paymentMethod: 'vnpay',
-        status: 'pending',
-        description: `Tiền cọc cho đồ chơi: ${toy.title}`
-      });
-
-      const paymentUrl = vnpayService.createPaymentUrl(req, {
-        amount: totalAmount,
-        bookingId: booking._id,
-        orderInfo: `Thanh toan thue đồ chơi ${toy.title}`,
-      });
-
-      return res.status(201).json({
-        success: true,
-        message: 'Yêu cầu thanh toán đã được khởi tạo.',
-        paymentUrl,
-        bookingId: booking._id
-      });
-    }
 
     const populated = await Booking.findById(booking._id)
       .populate('renterId', 'name email phoneNumber avatar')
       .populate('toyId', 'title thumbnail pricePerHour depositValue category');
 
-    res.status(201).json({ success: true, message: 'Đặt thuê thành công!', data: populated });
+    res.status(201).json({ 
+      success: true, 
+      message: 'Đặt thuê thành công! Vui lòng đợi nhân viên duyệt đơn.', 
+      data: populated 
+    });
   } catch (error) {
     next(error);
   }
@@ -109,18 +75,51 @@ exports.getBookings = async (req, res, next) => {
     const { page = 1, limit = 10, status, search } = req.query;
     const isStaff = ['EMPLOYEE', 'ADMIN'].includes(req.user.role);
 
-    let filter = {};
+    // Filter cơ bản
+    let matchQuery = {};
     if (!isStaff) {
-      filter.renterId = req.user._id;
+      matchQuery.renterId = req.user._id;
     }
-    if (status) filter.status = status;
+    if (status && status !== 'ALL') matchQuery.status = status;
 
-    const skip = (page - 1) * limit;
+    const skip = (page - 1) * parseInt(limit);
 
-    // Build aggregation pipeline for advanced sorting and filtering
-    let pipeline = [
-      { $match: filter },
-      // Add a priority field for sorting
+    // Pipeline chính dùng facet để lấy cả data và total count
+    const pipeline = [
+      { $match: matchQuery },
+      // Lookup Toy để tìm kiếm theo tên
+      {
+        $lookup: {
+          from: 'toys',
+          localField: 'toyId',
+          foreignField: '_id',
+          as: 'toy'
+        }
+      },
+      { $unwind: '$toy' },
+      // Lookup Renter
+      {
+        $lookup: {
+          from: 'users',
+          localField: 'renterId',
+          foreignField: '_id',
+          as: 'renter'
+        }
+      },
+      { $unwind: '$renter' },
+      // Lọc theo từ khóa (tên đồ chơi hoặc tên người thuê nếu là staff)
+      ...(search ? [{
+        $match: {
+          $or: [
+            { 'toy.title': { $regex: search, $options: 'i' } },
+            ...(isStaff ? [
+              { 'renter.name': { $regex: search, $options: 'i' } },
+              { 'renter.email': { $regex: search, $options: 'i' } }
+            ] : [])
+          ]
+        }
+      }] : []),
+      // Add Priority cho sort
       {
         $addFields: {
           priority: {
@@ -135,39 +134,54 @@ exports.getBookings = async (req, res, next) => {
           }
         }
       },
-      // Sort by priority first, then by date (newest first)
-      { $sort: { priority: 1, createdAt: -1 } },
-      { $skip: skip },
-      { $limit: parseInt(limit) }
+      {
+        $facet: {
+          metadata: [{ $count: "total" }],
+          data: [
+            { $sort: { priority: 1, createdAt: -1 } },
+            { $skip: skip },
+            { $limit: parseInt(limit) },
+            // Project lại field để tương đồng với populate cũ
+            {
+              $project: {
+                _id: 1,
+                startDate: 1,
+                endDate: 1,
+                status: 1,
+                totalAmount: 1,
+                depositAmount: 1,
+                paymentMethod: 1,
+                paymentStatus: 1,
+                message: 1,
+                createdAt: 1,
+                toyId: {
+                   _id: '$toy._id',
+                   title: '$toy.title',
+                   thumbnail: '$toy.thumbnail',
+                   pricePerHour: '$toy.pricePerHour',
+                   category: '$toy.category'
+                },
+                renterId: {
+                   _id: '$renter._id',
+                   name: '$renter.name',
+                   email: '$renter.email',
+                   phoneNumber: '$renter.phoneNumber',
+                   avatar: '$renter.avatar'
+                }
+              }
+            }
+          ]
+        }
+      }
     ];
 
-    let bookingsData = await Booking.aggregate(pipeline);
-
-    // Populate the results (manually because aggregate doesn't do it like find)
-    let populatedBookings = await Booking.populate(bookingsData, [
-      { path: 'renterId', select: 'name email phoneNumber avatar' },
-      { path: 'toyId', select: 'title thumbnail pricePerHour category status' },
-      { path: 'employeeId', select: 'name email' }
-    ]);
-
-    // Filter by search keyword if staff (handle in-memory following previous implementation)
-    if (isStaff && search) {
-      const keyword = search.toLowerCase();
-      populatedBookings = populatedBookings.filter((b) => {
-        const renter = b.renterId;
-        return (
-          renter?.name?.toLowerCase().includes(keyword) ||
-          renter?.email?.toLowerCase().includes(keyword) ||
-          renter?.phoneNumber?.includes(keyword)
-        );
-      });
-    }
-
-    const total = await Booking.countDocuments(filter);
+    const result = await Booking.aggregate(pipeline);
+    const bookings = result[0].data;
+    const total = result[0].metadata[0]?.total || 0;
 
     res.json({
       success: true,
-      data: populatedBookings,
+      data: bookings,
       pagination: {
         total,
         page: parseInt(page),
@@ -191,8 +205,6 @@ exports.getBookingById = async (req, res, next) => {
     if (!booking) {
       return res.status(404).json({ success: false, message: 'Không tìm thấy đơn.' });
     }
-
-    // Customer chỉ xem đơn của mình
     const isOwner = booking.renterId._id.equals(req.user._id);
     const isStaff = ['EMPLOYEE', 'ADMIN'].includes(req.user.role);
     if (!isOwner && !isStaff) {
@@ -224,18 +236,43 @@ exports.confirmBooking = async (req, res, next) => {
     if (!toy) {
       return res.status(404).json({ success: false, message: 'Không tìm thấy đồ chơi liên quan.' });
     }
-    
+
     // Cho phép duyệt nếu toy đang AVAILABLE hoặc PENDING (đang đợi duyệt)
     if (toy.status !== 'AVAILABLE' && toy.status !== 'PENDING') {
-      return res.status(400).json({ 
-        success: false, 
-        message: `Không thể duyệt đơn vì đồ chơi này hiện đang ở trạng thái: ${toy.status}.` 
+      return res.status(400).json({
+        success: false,
+        message: `Không thể duyệt đơn vì đồ chơi này hiện đang ở trạng thái: ${toy.status}.`
       });
     }
 
-    // Nguyên tử: Một người duyệt thì toy thành reserved/pending (nhưng ở đây đã được giữ từ create)
-    // Cập nhật trạng thái đơn thành APPROVED (Chờ khách đến lấy)
-    booking.status = 'APPROVED';
+    // Cập nhật trạng thái đơn
+    if (booking.paymentMethod === 'vnpay') {
+      booking.status = 'WAITING_PAYMENT';
+      
+      // Tạo Transaction records ở giai đoạn này để theo dõi
+      await Transaction.create({
+        userId: booking.renterId,
+        bookingId: booking._id,
+        amount: booking.totalAmount, // Phí thuê
+        type: 'fare',
+        paymentMethod: 'vnpay',
+        status: 'pending',
+        description: `Thanh toán phí thuê cho đồ chơi: ${toy.title}`
+      });
+
+      await Transaction.create({
+        userId: booking.renterId,
+        bookingId: booking._id,
+        amount: booking.depositAmount, // Tiền cọc
+        type: 'deposit',
+        paymentMethod: 'vnpay',
+        status: 'pending',
+        description: `Tiền cọc cho đồ chơi: ${toy.title}`
+      });
+    } else {
+      booking.status = 'APPROVED';
+    }
+
     booking.employeeId = employeeId;
     await booking.save();
 
@@ -244,7 +281,11 @@ exports.confirmBooking = async (req, res, next) => {
       .populate('toyId', 'title thumbnail')
       .populate('employeeId', 'name email');
 
-    res.json({ success: true, message: 'Xác nhận đơn thành công!', data: populated });
+    res.json({ 
+      success: true, 
+      message: booking.status === 'WAITING_PAYMENT' ? 'Đã duyệt! Đang chờ khách thanh toán.' : 'Xác nhận đơn thành công!', 
+      data: populated 
+    });
   } catch (error) {
     next(error);
   }
@@ -278,6 +319,8 @@ exports.rejectBooking = async (req, res, next) => {
     next(error);
   }
 };
+
+
 // PATCH /api/bookings/:id/cancel - Khách tự hủy đơn
 exports.cancelBooking = async (req, res, next) => {
   try {
@@ -370,7 +413,7 @@ exports.vnpayReturn = async (req, res, next) => {
 exports.getPaymentUrl = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const booking = await Booking.findById(id);
+    const booking = await Booking.findById(id).populate('toyId');
 
     if (!booking) {
       return res.status(404).json({ success: false, message: 'Không tìm thấy đơn.' });
@@ -392,7 +435,8 @@ exports.getPaymentUrl = async (req, res, next) => {
     const paymentUrl = vnpayService.createPaymentUrl(req, {
       amount: totalAmount,
       bookingId: booking._id,
-      orderInfo: `Thanh toan lai đơn thue đồ chơi #${booking._id.slice(-6).toUpperCase()}`,
+      orderInfo: `Thanh toan thue do choi ${booking.toyId?.title || 'System'}`,
+      returnUrl: `http://localhost:9999/api/vnpay_return`
     });
 
     res.json({ success: true, paymentUrl });
@@ -405,10 +449,10 @@ exports.getPaymentUrl = async (req, res, next) => {
 exports.redirectToPayment = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const booking = await Booking.findById(id);
+    const booking = await Booking.findById(id).populate('toyId');
 
     if (!booking || !booking.renterId.equals(req.user._id) || booking.status !== 'WAITING_PAYMENT') {
-       return res.status(400).send('Đơn hàng không khả dụng để thanh toán lại hoặc bạn không có quyền.');
+      return res.status(400).send('Đơn hàng không khả dụng để thanh toán lại hoặc bạn không có quyền.');
     }
 
     const totalAmount = booking.totalAmount + booking.depositAmount;
@@ -417,6 +461,7 @@ exports.redirectToPayment = async (req, res, next) => {
       amount: totalAmount,
       bookingId: booking._id,
       orderInfo: `Thanh toan lai đơn thue đồ chơi #${booking._id.slice(-6).toUpperCase()}`,
+      returnUrl: `http://localhost:9999/api/vnpay_return`
     });
 
     res.redirect(paymentUrl);

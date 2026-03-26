@@ -13,12 +13,11 @@ export function Header({ navigate }) {
   const handleRegisterClick = () => navigate && navigate("/register");
   
   const isLoggedIn = isAuthenticated();
-  const { userProfile } = useAuth();
+  const { userProfile, logout } = useAuth();
   const currentUser = userProfile || {};
 
-  const handleLogout = () => {
-    clearTokens();
-    if (navigate) navigate("/");
+  const handleLogout = async () => {
+    await logout();
     window.location.reload(); 
   };
 
@@ -89,9 +88,6 @@ export function Header({ navigate }) {
                 )}
                 <Dropdown.Item onClick={() => navigate && navigate("/bookings")} className="hdr-dropdown-item">
                   <Menu size={16} /> My Bookings
-                </Dropdown.Item>
-                <Dropdown.Item onClick={() => navigate && navigate("/address")} className="hdr-dropdown-item">
-                  <MapPin size={16} /> Address Settings
                 </Dropdown.Item>
                 <Dropdown.Item onClick={() => navigate && navigate("/profile")} className="hdr-dropdown-item">
                   <UserCircle size={16} /> Profile

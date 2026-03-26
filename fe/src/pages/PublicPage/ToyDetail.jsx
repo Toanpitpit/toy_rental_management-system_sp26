@@ -121,6 +121,9 @@ export default function ToyDetail() {
   const currentStatus = (toy.status || '').toUpperCase();
   const statusConf = STATUS_CONFIG[currentStatus] || { text: currentStatus, variant: 'secondary' };
   const canBook = currentStatus === 'AVAILABLE';
+  const isMyBooking = userProfile && 
+                    toy?.currentBooking?.renterId?.toString() === userProfile._id?.toString() &&
+                    toy.status !== 'AVAILABLE';
   
   // Ensure default images if none exist
   const rawImages = [toy.thumbnail, ...(toy.detail?.images || [])].filter(Boolean);
@@ -257,7 +260,23 @@ export default function ToyDetail() {
               </Card>
 
               {/* Form đặt thuê */}
-              {canBook ? (
+              {isMyBooking ? (
+                <Alert variant="info" className="border-0 shadow-sm rounded-4 d-flex align-items-center gap-3">
+                  <div className="fs-3">🎁</div>
+                  <div>
+                    <strong className="d-block mb-1">
+                      {toy.currentBooking?.status === 'ACTIVE' ? 'Bạn đang thuê món đồ này!' : 'Bạn đã đặt món đồ này!'}
+                    </strong>
+                    <Button 
+                      variant="link" 
+                      className="p-0 text-decoration-none small fw-bold text-info"
+                      onClick={() => navigate('/bookings')}
+                    >
+                      Xem trạng thái đơn hàng của bạn →
+                    </Button>
+                  </div>
+                </Alert>
+              ) : canBook ? (
                 <Card className="border-0 shadow-sm rounded-4 overflow-hidden">
                   <Card.Header className="bg-light border-0 py-3">
                     <h6 className="mb-0 fw-bold">Chọn thời gian thuê</h6>

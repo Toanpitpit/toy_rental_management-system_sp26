@@ -4,13 +4,12 @@ const router = express.Router();
 const authController = require('../controllers/authController');
 const toyController = require('../controllers/toyController');
 const userController = require('../controllers/userController');
-const addressController = require('../controllers/addressController');
 const toyDetailController = require('../controllers/toyDetailController');
 const bookingController = require('../controllers/bookingController');
 const inspectionController = require('../controllers/inspectionController');
 const transactionController = require('../controllers/transactionController');
-const configController = require('../controllers/configController');
 const uploadController = require('../controllers/uploadController');
+const statsController = require('../controllers/statsController');
 const upload = require('../middleware/uploadMiddleware');
 
 const { protect, authorize, validateRegister } = require('../middleware/authMiddleware');
@@ -51,12 +50,7 @@ router.get('/users', protect, authorize('ADMIN'), userController.getAllUsers);
 router.patch('/users/:id/role', protect, authorize('ADMIN'), userController.updateUserRole);
 router.patch('/users/:id/status', protect, authorize('ADMIN'), userController.updateUserStatus);
 
-// ==================== ADDRESS ROUTES ====================
-router.get('/address/me', protect, addressController.getAddressByUserId);
-router.post('/address/me', protect, addressController.createAddress);
-router.put('/address/me/:id', protect, addressController.updateAddress);
-router.delete('/address/me/:id', protect, addressController.deleteAddress);
-router.patch('/address/me/:id/default', protect, addressController.setDefaultAddress);
+
 
 // ==================== TOY ROUTES ====================
 // IMPORTANT: Specific routes before parameterized routes
@@ -109,9 +103,9 @@ router.post('/bookings/:bookingId/transactions', protect, transactionController.
 router.get('/bookings/:bookingId/transactions', protect, transactionController.getTransactionsByBooking);
 router.patch('/transactions/:id/status', protect, authorize('EMPLOYEE', 'ADMIN'), transactionController.updateTransactionStatus);
 
-// ==================== CONFIG ROUTES ====================
-router.get('/configs', configController.getAllConfigs);
-router.get('/config/:key', configController.getConfigByKey);
-router.put('/config/:key', protect, authorize('ADMIN'), configController.updateConfig);
+
+
+// ==================== STATS ROUTES ====================
+router.get('/stats', protect, statsController.getStats);
 
 module.exports = router;

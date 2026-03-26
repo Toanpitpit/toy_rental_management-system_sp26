@@ -21,7 +21,7 @@ exports.checkToyOwnership = async (req, res, next) => {
       });
     }
 
-    if (toy.ownerId.toString() !== userId && userRole !== 'ADMIN') {
+    if (toy.ownerId.toString() !== userId && userRole !== 'ADMIN' && userRole !== 'EMPLOYEE') {
       return res.status(403).json({
         success: false,
         message: 'You do not have permission to modify this toy'
@@ -56,8 +56,8 @@ exports.checkToyOwnershipByToyId = async (req, res, next) => {
       });
     }
 
-    // Allow if user is owner or admin
-    if (toy.ownerId.toString() !== userId && userRole !== 'ADMIN') {
+    // Allow if user is owner or admin or employee
+    if (toy.ownerId.toString() !== userId && userRole !== 'ADMIN' && userRole !== 'EMPLOYEE') {
       return res.status(403).json({
         success: false,
         message: 'You do not have permission to modify this toy'
@@ -86,7 +86,7 @@ exports.checkOwnerIdMatch = (req, res, next) => {
   const userId = req.user?.id;
   const userRole = req.user?.role;
 
-  if (userRole !== 'ADMIN' && ownerId !== userId) {
+  if (userRole !== 'ADMIN' && userRole !== 'EMPLOYEE' && ownerId !== userId) {
     return res.status(403).json({
       success: false,
       message: 'You can only create toys for yourself'

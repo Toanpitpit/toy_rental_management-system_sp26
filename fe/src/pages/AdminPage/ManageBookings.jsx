@@ -29,7 +29,7 @@ const INSPECT_INITIAL = {
   condition: 'Excellent',
   surcharge: 0,
   notes: '',
-  isPaid: true,
+  isPaid: false,
   imageUrl: [], 
 };
 
@@ -147,7 +147,7 @@ export default function ManageBookings() {
       ...INSPECT_INITIAL, 
       type, 
       imageUrl: [], // Đảm bảo mảng rỗng khi mở mới
-      isPaid: booking.paymentMethod === 'cod' ? true : false // Mặc định tích nếu là COD
+      isPaid: booking.paymentStatus === 'paid' ? true : false 
     });
     setShowInspect(true);
   };
@@ -576,7 +576,13 @@ export default function ManageBookings() {
             <Button 
               variant={inspectForm.type === 'pickup' ? 'success' : 'primary'} 
               onClick={handleSubmitInspection} 
-              disabled={inspectLoading} 
+              disabled={
+                inspectLoading || 
+                (inspectForm.type === 'pickup' && 
+                 selectedBooking?.paymentMethod === 'cod' && 
+                 selectedBooking?.paymentStatus !== 'paid' && 
+                 !inspectForm.isPaid)
+              } 
               className="px-5 shadow-sm rounded-pill fw-bold"
             >
               {inspectLoading ? <Spinner size="sm" className="me-1" /> : null}

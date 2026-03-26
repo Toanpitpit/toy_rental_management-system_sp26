@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { Container, Button } from "react-bootstrap";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { heroSlides as mockSlides } from "../constants/mockData";
-import configService from "../services/configService";
 import "../styles/components/HeroBanner.css";
 
 export function HeroBanner() {
@@ -11,17 +10,8 @@ export function HeroBanner() {
   const [animating, setAnimating] = useState(false);
 
   useEffect(() => {
-    const fetchBanners = async () => {
-      try {
-        const res = await configService.getConfigByKey('hero_banners');
-        if (res.success && res.data && res.data.length > 0) {
-          setSlides(res.data);
-        }
-      } catch (error) {
-        console.warn('Using mock banners due to error');
-      }
-    };
-    fetchBanners();
+    // Using high quality mock slides for static design
+    setSlides(mockSlides);
   }, []);
 
   useEffect(() => {

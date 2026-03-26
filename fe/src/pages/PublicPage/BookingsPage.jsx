@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
-import { Container, Table, Badge, Button, Spinner, Alert, Modal } from 'react-bootstrap';
+import { Container, Table, Badge, Button, Spinner, Alert, Modal, Pagination } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import { Trash2, ExternalLink, Info, Clock, AlertCircle, CheckCircle2, History } from 'lucide-react';
+import { Trash2, ExternalLink, Info, Clock, AlertCircle, CheckCircle2, History, Search, Filter } from 'lucide-react';
 import { Header } from '../../components/Header';
 import { Footer } from '../../components/Footer';
 import bookingService from '../../services/bookingService';
@@ -17,7 +17,7 @@ const STATUS_MAP = {
   ACTIVE: { text: 'Đang thuê', variant: 'warning' },
   REJECTED: { text: 'Bị từ chối', variant: 'danger' },
   CANCELLED: { text: 'Đã hủy', variant: 'secondary' },
-  COMPLETE: { text: 'Hoàn thành', variant: 'primary' },
+  COMPLETE: { text: 'Hoàn thành', variant: 'success' },
 };
 
 export default function BookingsPage() {
@@ -28,11 +28,24 @@ export default function BookingsPage() {
   const [selectedBooking, setSelectedBooking] = useState(null);
   const [selectedInspections, setSelectedInspections] = useState([]);
   const [inspectionsLoading, setInspectionsLoading] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [statusFilter, setStatusFilter] = useState('ALL');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [paginationInfo, setPaginationInfo] = useState({ total: 0, pages: 1 });
   const navigate = useNavigate();
 
   useEffect(() => {
     fetchBookings();
-  }, []);
+  }, [currentPage, statusFilter]);
+
+  // Debounce search
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (currentPage === 1) fetchBookings();
+      else setCurrentPage(1); // Triggers the other useEffect
+    }, 500);
+    return () => clearTimeout(timer);
+  }, [searchTerm]);
 
   useEffect(() => {
     if (selectedBooking) {
@@ -59,9 +72,15 @@ export default function BookingsPage() {
   const fetchBookings = async () => {
     try {
       setLoading(true);
-      const res = await bookingService.getBookings();
+      const res = await bookingService.getBookings({
+        page: currentPage,
+        limit: 5,
+        status: statusFilter,
+        search: searchTerm
+      });
       if (res.success) {
         setBookings(res.data);
+        setPaginationInfo(res.pagination);
       } else {
         setError(res.message);
       }
@@ -109,12 +128,49 @@ export default function BookingsPage() {
       setSelectedBooking(prev => ({ ...prev, paymentLoading: false }));
     }
   };
+  const filterTabs = [
+    { key: 'ALL', label: 'Tất cả' },
+    { key: 'PENDING_APPROVED', label: 'Chờ duyệt' },
+    { key: 'WAITING_PAYMENT', label: 'Thanh toán' },
+    { key: 'APPROVED', label: 'Đã duyệt' },
+    { key: 'ACTIVE', label: 'Đang thuê' },
+    { key: 'COMPLETE', label: 'Hoàn thành' },
+    { key: 'CANCELLED', label: 'Đã hủy' }
+  ];
 
   return (
     <div className="bookings-page-wrapper">
       <Header navigate={navigate} />
       <Container className="py-5" style={{ minHeight: '70vh' }}>
-        <h2 className="mb-4 fw-bold">Đơn đặt thuê của tôi</h2>
+        <div className="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 gap-3">
+          <h2 className="fw-bold mb-0">Đơn đặt thuê của tôi</h2>
+          <div className="search-box position-relative" style={{ minWidth: '300px' }}>
+            <Search className="position-absolute translate-middle-y translate-middle-x" size={18} style={{ top: '50%', left: '20px' }} color="#6c757d" />
+            <input 
+              type="text" 
+              className="form-control rounded-pill ps-5 border-0 shadow-sm" 
+              placeholder="Tìm theo tên đồ chơi..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+          </div>
+        </div>
+
+            <div className="d-flex flex-wrap gap-2 mb-4 scrollbar-hide" style={{ overflowX: 'auto', paddingBottom: '5px' }}>
+              {filterTabs.map(tab => (
+                <Button
+                  key={tab.key}
+                  variant={statusFilter === tab.key ? "success" : "light"}
+                  className={`rounded-pill px-4 py-2 border-0 shadow-sm transition-all ${statusFilter === tab.key ? "fw-bold" : "text-dark"}`}
+                  onClick={() => {
+                    setStatusFilter(tab.key);
+                    setCurrentPage(1);
+                  }}
+                >
+                  {tab.label}
+                </Button>
+              ))}
+            </div>
         
         {loading ? (
           <div className="text-center py-5">
@@ -131,7 +187,8 @@ export default function BookingsPage() {
             </Button>
           </div>
         ) : (
-          <div className="table-responsive shadow-sm rounded-4">
+          <>
+            <div className="table-responsive shadow-sm rounded-4">
             <Table hover className="align-middle mb-0 bg-white">
               <thead className="bg-light">
                 <tr>
@@ -143,7 +200,11 @@ export default function BookingsPage() {
                 </tr>
               </thead>
               <tbody>
-                {bookings.map((b) => {
+                {bookings.length === 0 ? (
+                  <tr>
+                    <td colSpan="5" className="text-center py-5 text-muted">Không tìm thấy đơn đặt thuê nào.</td>
+                  </tr>
+                ) : bookings.map((b) => {
                   const status = STATUS_MAP[b.status] || { text: b.status, variant: 'secondary' };
                   const canCancel = ['PENDING_APPROVED', 'WAITING_PAYMENT'].includes(b.status);
                   
@@ -208,8 +269,34 @@ export default function BookingsPage() {
               </tbody>
             </Table>
           </div>
-        )}
-      </Container>
+
+          {/* Pagination */}
+          {paginationInfo.pages > 1 && (
+            <div className="d-flex justify-content-center mt-4">
+              <Pagination>
+                <Pagination.Prev 
+                  disabled={currentPage === 1} 
+                  onClick={() => setCurrentPage(prev => prev - 1)}
+                />
+                {[...Array(paginationInfo.pages)].map((_, i) => (
+                  <Pagination.Item
+                    key={i + 1}
+                    active={i + 1 === currentPage}
+                    onClick={() => setCurrentPage(i + 1)}
+                  >
+                    {i + 1}
+                  </Pagination.Item>
+                ))}
+                <Pagination.Next 
+                  disabled={currentPage === paginationInfo.pages} 
+                  onClick={() => setCurrentPage(prev => prev + 1)}
+                />
+              </Pagination>
+            </div>
+          )}
+        </>
+      )}
+    </Container>
 
       {/* Booking Detail Modal */}
       <Modal 

@@ -91,13 +91,21 @@ exports.getToyById = async (req, res, next) => {
     }
 
     const toyDetail = await ToyDetail.findOne({ toyId: id });
+    
+    // Tìm booking đang hoạt động hoặc đang chờ duyệt cho toy này (nếu có)
+    const Booking = require('../models/Booking');
+    const currentBooking = await Booking.findOne({ 
+      toyId: id, 
+      status: { $in: ['PENDING_APPROVED', 'WAITING_PAYMENT', 'APPROVED', 'ACTIVE'] } 
+    }).sort({ createdAt: -1 }).select('renterId status');
 
     res.status(200).json({
       success: true,
       message: 'Toy fetched successfully',
       data: {
         ...toy.toObject(),
-        detail: toyDetail
+        detail: toyDetail,
+        currentBooking // Thêm thông tin booking hiện tại
       }
     });
   } catch (error) {
@@ -175,6 +183,28 @@ exports.updateToy = async (req, res, next) => {
       origin
     } = req.body;
 
+    // Get old toy to check for file changes and status
+    const oldToy = await Toy.findById(id);
+    if (!oldToy) {
+      return res.status(404).json({
+        success: false,
+        message: 'Toy not found'
+      });
+    }
+
+    // Block update if toy is rented
+    if (oldToy.status === 'RENTED') {
+      return res.status(400).json({
+        success: false,
+        message: 'Đồ chơi đang được thuê, không thể chỉnh sửa!'
+      });
+    }
+
+    // Handle thumbnail deletion if changed
+    if (thumbnail && oldToy.thumbnail && thumbnail !== oldToy.thumbnail && oldToy.thumbnail.includes(process.env.AWS_S3_BUCKET_NAME)) {
+      await s3Service.deleteFile(oldToy.thumbnail);
+    }
+
     const toy = await Toy.findByIdAndUpdate(
       id,
       {
@@ -188,16 +218,17 @@ exports.updateToy = async (req, res, next) => {
       { new: true, runValidators: true }
     ).populate('ownerId', 'username email');
 
-    if (!toy) {
-      return res.status(404).json({
-        success: false,
-        message: 'Toy not found'
-      });
-    }
-
     let toyDetail = await ToyDetail.findOne({ toyId: id });
     
     if (toyDetail) {
+      // Handle detail images deletion if any images were removed
+      if (images && Array.isArray(images) && Array.isArray(toyDetail.images)) {
+        const removedImages = toyDetail.images.filter(img => !images.includes(img) && img.includes(process.env.AWS_S3_BUCKET_NAME));
+        for (const imgUrl of removedImages) {
+          await s3Service.deleteFile(imgUrl);
+        }
+      }
+
       toyDetail = await ToyDetail.findByIdAndUpdate(
         toyDetail._id,
         {
@@ -228,7 +259,7 @@ exports.deleteToy = async (req, res, next) => {
   try {
     const { id } = req.params;
 
-    const toy = await Toy.findByIdAndDelete(id);
+    const toy = await Toy.findById(id);
     if (!toy) {
       return res.status(404).json({
         success: false,
@@ -236,7 +267,33 @@ exports.deleteToy = async (req, res, next) => {
       });
     }
 
-    await ToyDetail.deleteOne({ toyId: id });
+    // Block deletion if toy is rented
+    if (toy.status === 'RENTED') {
+      return res.status(400).json({
+        success: false,
+        message: 'Đồ chơi đang được thuê, không thể xóa!'
+      });
+    }
+
+    // Delete thumbnail from S3
+    if (toy.thumbnail && toy.thumbnail.includes(process.env.AWS_S3_BUCKET_NAME)) {
+      await s3Service.deleteFile(toy.thumbnail);
+    }
+
+    // Delete detail images from S3
+    const toyDetail = await ToyDetail.findOne({ toyId: id });
+    if (toyDetail && Array.isArray(toyDetail.images)) {
+      for (const imgUrl of toyDetail.images) {
+        if (imgUrl.includes(process.env.AWS_S3_BUCKET_NAME)) {
+          await s3Service.deleteFile(imgUrl);
+        }
+      }
+    }
+
+    await Toy.findByIdAndDelete(id);
+    if (toyDetail) {
+      await ToyDetail.deleteOne({ _id: toyDetail._id });
+    }
 
     res.status(200).json({
       success: true,

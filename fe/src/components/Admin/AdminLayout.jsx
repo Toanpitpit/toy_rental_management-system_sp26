@@ -5,7 +5,12 @@ import useAuth from '../../hooks/useAuth';
 import '../../styles/components/AdminLayout.css';
 
 export default function AdminLayout({ children }) {
-  const { userProfile } = useAuth();
+  const { userProfile, logout } = useAuth();
+
+  const handleLogout = async () => {
+    await logout();
+    window.location.reload();
+  };
 
   return (
     <div className="admin-layout-wrapper">
@@ -31,10 +36,15 @@ export default function AdminLayout({ children }) {
                 <span className="fw-semibold d-none d-md-inline small">{userProfile?.name || 'User'}</span>
               </Dropdown.Toggle>
               <Dropdown.Menu className="shadow border-0 mt-3 p-2">
-                <Dropdown.Item href="/profile" className="d-flex align-items-center gap-2 p-2 rounded small"><User size={14} /> Profile</Dropdown.Item>
-                <Dropdown.Item href="/settings" className="d-flex align-items-center gap-2 p-2 rounded small"><Settings size={14} /> Settings</Dropdown.Item>
+                <Dropdown.Item onClick={() => window.location.href = '/profile'} className="d-flex align-items-center gap-2 p-2 rounded small"><User size={14} /> Profile</Dropdown.Item>
+                <Dropdown.Item onClick={() => window.location.href = '/settings'} className="d-flex align-items-center gap-2 p-2 rounded small"><Settings size={14} /> Settings</Dropdown.Item>
                 <Dropdown.Divider />
-                <Dropdown.Item href="/" className="d-flex align-items-center gap-2 p-2 rounded small text-danger"><LogOut size={14} /> Logout</Dropdown.Item>
+                <Dropdown.Item 
+                  onClick={handleLogout} 
+                  className="d-flex align-items-center gap-2 p-2 rounded small text-danger"
+                >
+                  <LogOut size={14} /> Logout
+                </Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
           </div>

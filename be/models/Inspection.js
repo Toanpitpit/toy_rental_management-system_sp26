@@ -23,10 +23,6 @@ const inspectionSchema = new mongoose.Schema(
       enum: ['New', 'Excellent', 'Good', 'Fair', 'Broken'],
       default: 'Excellent',
     },
-    rentalFee: {
-      type: Number,
-      default: 0,
-    },
     surcharge: {
       type: Number,
       default: 0,

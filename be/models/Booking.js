@@ -16,10 +16,6 @@ const bookingSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
     },
-    addressId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Address',
-    },
     message: {
       type: String,
     },

@@ -35,10 +35,10 @@ exports.validateToy = [
     .isFloat({ min: 0 }).withMessage('depositValue must be a positive number'),
   body('status')
     .optional()
-    .isIn(['available', 'pending', 'rented', 'unavailable']).withMessage('status must be one of: available, pending, rented, unavailable'),
+    .isIn(['AVAILABLE', 'PENDING', 'RENTED', 'UNAVAILABLE']).withMessage('status must be one of: AVAILABLE, PENDING, RENTED, UNAVAILABLE'),
   body('thumbnail')
     .optional()
-    .isArray().withMessage('thumbnail must be an array of strings'),
+    .isString().withMessage('thumbnail must be a string'),
   handleValidationErrors
 ];
 
@@ -81,15 +81,15 @@ exports.validateToyPartialUpdate = [
   body('category').optional().trim().isLength({ min: 2, max: 100 }),
   body('pricePerHour').optional().isFloat({ min: 0 }),
   body('depositValue').optional().isFloat({ min: 0 }),
-  body('status').optional().isIn(['available', 'pending', 'rented', 'unavailable']),
-  body('thumbnail').optional().isArray(),
+  body('status').optional().isIn(['AVAILABLE', 'PENDING', 'RENTED', 'UNAVAILABLE']),
+  body('thumbnail').optional().isString(),
   handleValidationErrors
 ];
 
 exports.validateToyStatusUpdate = [
   body('status')
     .notEmpty().withMessage('status is required')
-    .isIn(['available', 'pending', 'rented', 'unavailable']),
+    .isIn(['AVAILABLE', 'PENDING', 'RENTED', 'UNAVAILABLE']),
   handleValidationErrors
 ];
 

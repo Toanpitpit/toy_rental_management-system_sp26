@@ -1,5 +1,5 @@
 import { Nav } from 'react-bootstrap';
-import { NavLink } from 'react-router-dom';
+import { useNavigate, NavLink } from 'react-router-dom';
 import { 
   LayoutDashboard, 
   Package, 
@@ -15,6 +15,7 @@ import '../../styles/components/AdminSidebar.css';
 
 export default function AdminSidebar() {
   const { userProfile, logout } = useAuth();
+  const navigate = useNavigate();
   const isAdmin = userProfile?.role === 'ADMIN';
   const isEmployee = userProfile?.role === 'EMPLOYEE';
 
@@ -29,7 +30,6 @@ export default function AdminSidebar() {
   }
 
   if (isAdmin) {
-    menuItems.push({ icon: <Settings size={20} />, label: 'Cài đặt hệ thống', path: '/admin/system' });
     menuItems.push({ icon: <Users size={20} />, label: 'Người dùng', path: '/admin/users' });
   }
 
@@ -72,8 +72,8 @@ export default function AdminSidebar() {
               <div className="user-role text-muted small">{userProfile?.role}</div>
             </div>
           </div>
-          <button className="btn btn-outline-danger btn-sm w-100 d-flex align-items-center justify-content-center gap-2" onClick={logout}>
-            <LogOut size={14} /> Thoát Dashboard
+          <button className="btn btn-outline-success btn-sm w-100 d-flex align-items-center justify-content-center gap-2" onClick={() => navigate('/')}>
+            <LogOut size={14} /> Về Trang Chủ
           </button>
         </div>
       </div>

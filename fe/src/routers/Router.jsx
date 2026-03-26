@@ -1,7 +1,6 @@
 import { Login, Register, ResetPassword, VerifyOTP } from "../components/auth";
 import HomePage from "../pages/PublicPage/HomePage";
 import ProfilePage from "../pages/PublicPage/ProfilePage";
-import AddressPage from "../pages/PublicPage/AddressPage";
 import ListToy from "../pages/PublicPage/ListToy";
 import ToyDetail from "../pages/PublicPage/ToyDetail";
 import BookingsPage from "../pages/PublicPage/BookingsPage";
@@ -10,7 +9,6 @@ import ManageToys from "../pages/AdminPage/ManageToys";
 import ManageBookings from "../pages/AdminPage/ManageBookings";
 import ManageInspections from "../pages/AdminPage/ManageInspections";
 import ManageUsers from "../pages/AdminPage/ManageUsers";
-import AdminSystemPage from "../pages/AdminPage/AdminSystemPage";
 import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
 import { AuthProvider } from '../hooks/useAuth';
 import ProtectedRoute from '../components/ProtectedRoute';
@@ -39,7 +37,6 @@ function AppRoutesInternal({ navigate }) {
 
       {/* User */}
       <Route path="/profile" element={<ProfilePage />} />
-      <Route path="/address" element={<AddressPage />} />
 
       {/* Auth */}
       <Route
@@ -101,11 +98,6 @@ function AppRoutesInternal({ navigate }) {
       <Route path="/admin/users" element={
         <ProtectedRoute allowedRoles={['ADMIN']}>
           <ManageUsers />
-        </ProtectedRoute>
-      } />
-      <Route path="/admin/system" element={
-        <ProtectedRoute allowedRoles={['ADMIN']}>
-          <AdminSystemPage />
         </ProtectedRoute>
       } />
 

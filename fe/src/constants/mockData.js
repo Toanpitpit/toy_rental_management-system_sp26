@@ -261,6 +261,5 @@ export const footerPolicyLinks = [
 export const contactInfo = {
   email: "support@toyrent.com",
   phone: "+1 (800) 555-TOYS",
-  address: "123 Toy Lane, Fun City, CA 90001",
-  hours: "Mon – Sat 9:00 – 18:00",
+  hours: "Thứ 2 – Thứ 7: 9:00 – 18:00",
 };

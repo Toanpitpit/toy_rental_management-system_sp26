@@ -32,10 +32,8 @@ require('./models/ToyDetail');
 require('./models/Booking');
 require('./models/Inspection');
 require('./models/Transaction');
-require('./models/Address');
 require('./models/Rating');
 require('./models/Invoice');
-require('./models/Config');
 
 
 // Routes
